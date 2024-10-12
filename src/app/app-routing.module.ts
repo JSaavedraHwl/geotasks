@@ -8,8 +8,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'autenticacion',
     pathMatch: 'full'
+  },
+  {
+    path: 'autenticacion',
+    loadChildren: () => import('./pages/autenticacion/autenticacion.module').then( m => m.AutenticacionPageModule)
   },
 ];
 
