@@ -1,0 +1,13 @@
+<google-map
+    height="100%"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+    [options]="options"
+    (mapClick)="onMapClick($event)">
+    <map-marker
+    *ngIf="markerPosition"
+    [position]="markerPosition"
+    [options]="markerOptions">
+  </map-marker>
+  </google-map>

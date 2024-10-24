@@ -1,0 +1,18 @@
+ion-accordion-group {
+    --transition-duration: 300ms;
+  }
+  
+  ion-item[slot="header"] {
+    --background: #f0f0f0;
+    --color: #333;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  ion-list {
+    padding: 0 15px;
+  }
+  
+  ion-icon {
+    margin-left: auto;
+  }

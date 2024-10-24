@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
+import { LocalicacionService } from 'src/app/servicios/localicacion.service';
+import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
 
 @Component({
   selector: 'app-autenticacion',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AutenticacionPage implements OnInit {
 
+  autenticacionService = inject(AutenticacionService);
+  localicacionService = inject(LocalicacionService);
+  notificacionesService = inject(NotificacionesService);
   constructor() { }
 
   ngOnInit() {
+    this.localicacionService.printCurrentPosition();
+    
+  }
+
+  logear() {
+    this.autenticacionService.authenticate(true);
   }
 
 }
