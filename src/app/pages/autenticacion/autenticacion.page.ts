@@ -22,26 +22,22 @@ export class AutenticacionPage implements OnInit {
   login() {
     if (this.email && this.password) {
       // Aquí puedes implementar la lógica para validar el email y contraseña con tu backend
-      console.log('Iniciando sesión con:', this.email);
-      this.autenticacionService.authenticate();
+      this.autenticacionService.login(this.email, this.password)
+      .subscribe();
     } else {
       console.log('Por favor, completa los campos de correo electrónico y contraseña.');
     }
   }
 
   loginAsGuest() {
-    console.log('Iniciando sesión como invitado');
     this.autenticacionService.authenticateAsGuest();
   }
 
   navigateToRegister() {
-    // Navegar a la página de registro
     this.router.navigate(['/registro']);
   }
 
   resetPassword() {
-    // Implementar la lógica para restablecer la contraseña
-    console.log('Redirigiendo a la página de restablecimiento de contraseña');
     this.router.navigate(['/reset-password']);
   }
 }
