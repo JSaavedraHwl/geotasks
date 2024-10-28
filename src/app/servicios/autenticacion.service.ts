@@ -83,7 +83,7 @@ export class AutenticacionService {
     localStorage.removeItem('token');
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('isGuest');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/autenticacion']);
   }
 
   private loadInitialAuthState(): boolean {
