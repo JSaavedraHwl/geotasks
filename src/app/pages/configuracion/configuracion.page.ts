@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-configuracion',
@@ -7,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfiguracionPage implements OnInit {
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
+  cerrarSesion(){
+    console.log("cerrando sesión...");
+
+    this.navCtrl.navigateRoot('/autenticacion')
+  }
   ngOnInit() {
   }
 
