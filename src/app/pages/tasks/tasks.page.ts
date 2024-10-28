@@ -94,4 +94,12 @@ export class TasksPage implements OnInit {
       modal.present();
     });
   }
+  async openTaskModal(folderId: number) {
+    const modal = await this.modalController.create({
+      component: FormularioTareaComponent,
+      componentProps: { folderId }, // Pasamos el folderId al modal
+    });
+    return await modal.present();
+  }
+  
 }
