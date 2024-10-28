@@ -1,0 +1,28 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+  }
+  
+  ion-card {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .register-button {
+    margin-top: 20px;
+  }
+  
+  .login-redirect {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .login-redirect a {
+    color: var(--ion-color-primary);
+    text-decoration: none;
+  }
+  

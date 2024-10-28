@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { Router } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './autenticacion.page.html',
   styleUrls: ['./autenticacion.page.scss'],
 })
-export class AutenticacionPage implements OnInit {
+export class AutenticacionPage implements OnInit, OnDestroy {
 
   autenticacionService = inject(AutenticacionService);
   router = inject(Router);
@@ -17,31 +17,43 @@ export class AutenticacionPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  limpiarCampos(){
+    this.email = '';
+    this.password = '';
+
+  }
+
+  ngOnInit() { 
+    this.limpiarCampos();
+  }
+
+  ngOnDestroy(): void {
+    
+  }
+
+  ionViewDidLeave(){
+    this.limpiarCampos();
+  }
 
   login() {
     if (this.email && this.password) {
       // Aquí puedes implementar la lógica para validar el email y contraseña con tu backend
-      console.log('Iniciando sesión con:', this.email);
-      this.autenticacionService.authenticate();
+      this.autenticacionService.login(this.email, this.password)
+      .subscribe();
     } else {
       console.log('Por favor, completa los campos de correo electrónico y contraseña.');
     }
   }
 
   loginAsGuest() {
-    console.log('Iniciando sesión como invitado');
     this.autenticacionService.authenticateAsGuest();
   }
 
   navigateToRegister() {
-    // Navegar a la página de registro
     this.router.navigate(['/registro']);
   }
 
   resetPassword() {
-    // Implementar la lógica para restablecer la contraseña
-    console.log('Redirigiendo a la página de restablecimiento de contraseña');
     this.router.navigate(['/reset-password']);
   }
 }
