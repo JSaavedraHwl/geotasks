@@ -12,7 +12,7 @@ export class AutenticacionService {
   private router = inject(Router);
   private http = inject(HttpClient);
 
-  private apiUrl = 'https://api-movil-85c1.onrender.com';
+  private apiUrl = 'https://ms-auth-geotasks-5ddd59e2c05a.herokuapp.com';
   private _autenticathed = new BehaviorSubject<boolean>(this.loadInitialAuthState());
   private _isGuest = new BehaviorSubject<boolean>(this.loadInitialGuestState());
 
