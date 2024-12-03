@@ -51,13 +51,14 @@ export class TasksPage implements OnInit {
     this.newFolderName = ''; // Limpiar el nombre después de cerrar
   }
   async addFolder() {
-    if (this.newFolderName.trim()) {
-      await this.taskService.addFolder(this.newFolderName);
-      this.closeAddFolderModal();
-    } else {
+    if (!this.newFolderName || !this.newFolderName.trim()) {
       console.log('El nombre de la carpeta no puede estar vacío');
+      return;
     }
+    await this.taskService.addFolder(this.newFolderName.trim());
+    this.closeAddFolderModal();
   }
+  
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Agregar',
