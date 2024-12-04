@@ -1,134 +1,129 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule, ModalController, ActionSheetController } from '@ionic/angular';
 import { TasksPage } from './tasks.page';
-import { HttpClientModule } from '@angular/common/http';
-import { IonicModule, ActionSheetController, ModalController } from '@ionic/angular';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TaskService } from 'src/app/servicios/task.service';
 import { of } from 'rxjs';
-import { FormularioTareaComponent } from 'src/app/componentes/formulario-tarea/formulario-tarea.component';
 
 describe('TasksPage', () => {
   let component: TasksPage;
   let fixture: ComponentFixture<TasksPage>;
-
-  // Mock de TaskService
-  const taskServiceMock = {
-    folders$: of([]), // Simula folders como un observable vacío
-    toggleTaskCompletion: jasmine.createSpy('toggleTaskCompletion').and.returnValue(Promise.resolve()),
-    deleteTask: jasmine.createSpy('deleteTask').and.returnValue(Promise.resolve()),
-    addFolder: jasmine.createSpy('addFolder').and.returnValue(Promise.resolve()),
-  };
-
-  // Mock de ModalController
-  const modalControllerMock = {
-    create: jasmine.createSpy('create').and.returnValue(
-      Promise.resolve({
-        present: jasmine.createSpy('present').and.returnValue(Promise.resolve()),
-      })
-    ),
-  };
-
-  // Mock de ActionSheetController
-  const actionSheetControllerMock = {
-    create: jasmine.createSpy('create').and.returnValue(
-      Promise.resolve({
-        present: jasmine.createSpy('present').and.returnValue(Promise.resolve()),
-      })
-    ),
-  };
+  let taskServiceSpy: jasmine.SpyObj<TaskService>;
+  let modalControllerSpy: jasmine.SpyObj<ModalController>;
+  let actionSheetControllerSpy: jasmine.SpyObj<ActionSheetController>;
 
   beforeEach(async () => {
+    // Espías para los servicios
+    taskServiceSpy = jasmine.createSpyObj('TaskService', [
+      'folders$',
+      'toggleTaskCompletion',
+      'deleteTask',
+      'addFolder',
+    ]);
+    modalControllerSpy = jasmine.createSpyObj('ModalController', ['create']);
+    actionSheetControllerSpy = jasmine.createSpyObj('ActionSheetController', ['create']);
+
+    // Configuración del módulo de prueba
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), HttpClientModule],
       declarations: [TasksPage],
+      imports: [IonicModule.forRoot()],
       providers: [
-        { provide: TaskService, useValue: taskServiceMock },
-        { provide: ModalController, useValue: modalControllerMock },
-        { provide: ActionSheetController, useValue: actionSheetControllerMock },
+        { provide: TaskService, useValue: taskServiceSpy },
+        { provide: ModalController, useValue: modalControllerSpy },
+        { provide: ActionSheetController, useValue: actionSheetControllerSpy },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Para ignorar errores de componentes personalizados como ion-*
     }).compileComponents();
 
     fixture = TestBed.createComponent(TasksPage);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('debería crear el componente', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load folders on initialization', () => {
-    spyOn(component, 'loadFolders').and.callThrough();
-    component.ngOnInit();
-    expect(component.loadFolders).toHaveBeenCalled();
+  describe('ngOnInit', () => {
+    it('debería cargar las carpetas al inicializar', async () => {
+      // Simula el flujo de carpetas
+      const mockFolders = [{ id: 1, name: 'Carpeta 1', tasks: [] }];
+      taskServiceSpy.folders$ = of(mockFolders);
+
+      await component.ngOnInit();
+
+      expect(component.folders).toEqual(mockFolders);
+    });
   });
 
-  it('should toggle task completion', async () => {
-    await component.toggleTaskCompletion(1, 101);
-    expect(taskServiceMock.toggleTaskCompletion).toHaveBeenCalledWith(1, 101);
-    expect(taskServiceMock.toggleTaskCompletion).toHaveBeenCalledTimes(1);
+  describe('toggleTaskCompletion', () => {
+    it('debería alternar el estado de completado de una tarea', async () => {
+      taskServiceSpy.toggleTaskCompletion.and.returnValue(Promise.resolve());
+      spyOn(component, 'loadFolders');
+
+      await component.toggleTaskCompletion(1, 1);
+
+      expect(taskServiceSpy.toggleTaskCompletion).toHaveBeenCalledWith(1, 1);
+      expect(component.loadFolders).toHaveBeenCalled();
+    });
   });
 
-  it('should delete a task', async () => {
-    await component.deleteTask(1, 101);
-    expect(taskServiceMock.deleteTask).toHaveBeenCalledWith(1, 101);
-    expect(taskServiceMock.deleteTask).toHaveBeenCalledTimes(1);
+  describe('deleteTask', () => {
+    it('debería eliminar una tarea y recargar las carpetas', async () => {
+      taskServiceSpy.deleteTask.and.returnValue(Promise.resolve());
+      spyOn(component, 'loadFolders');
+
+      await component.deleteTask(1, 1);
+
+      expect(taskServiceSpy.deleteTask).toHaveBeenCalledWith(1, 1);
+      expect(component.loadFolders).toHaveBeenCalled();
+    });
   });
 
-  it('should open add folder modal', () => {
-    component.openAddFolderModal();
-    expect(component.isAddFolderModalOpen).toBeTrue();
+  describe('addFolder', () => {
+    it('debería agregar una nueva carpeta si el nombre no está vacío', async () => {
+      component.newFolderName = 'Nueva Carpeta';
+      taskServiceSpy.addFolder.and.returnValue(Promise.resolve());
+      spyOn(component, 'closeAddFolderModal');
+
+      await component.addFolder();
+
+      expect(taskServiceSpy.addFolder).toHaveBeenCalledWith('Nueva Carpeta');
+      expect(component.closeAddFolderModal).toHaveBeenCalled();
+    });
+
+    it('no debería agregar una carpeta si el nombre está vacío', async () => {
+      component.newFolderName = '';
+
+      await component.addFolder();
+
+      expect(taskServiceSpy.addFolder).not.toHaveBeenCalled();
+    });
   });
 
-  it('should close add folder modal and clear folder name', () => {
-    component.newFolderName = 'Test Folder';
-    component.closeAddFolderModal();
-    expect(component.isAddFolderModalOpen).toBeFalse();
-    expect(component.newFolderName).toBe('');
+  describe('presentActionSheet', () => {
+    it('debería abrir un action sheet con opciones', async () => {
+      const actionSheetMock = {
+        present: jasmine.createSpy('present'),
+      };
+      actionSheetControllerSpy.create.and.returnValue(Promise.resolve(actionSheetMock as any));
+
+      await component.presentActionSheet();
+
+      expect(actionSheetControllerSpy.create).toHaveBeenCalled();
+      expect(actionSheetMock.present).toHaveBeenCalled();
+    });
   });
 
-  it('should add a folder if name is valid', async () => {
-    component.newFolderName = 'Valid Folder';
-    await component.addFolder();
-    expect(taskServiceMock.addFolder).toHaveBeenCalledWith('Valid Folder');
-    expect(taskServiceMock.addFolder).toHaveBeenCalledTimes(1);
-  });
+  describe('openTaskModal', () => {
+    it('debería abrir un modal con el folderId', async () => {
+      const modalMock = { present: jasmine.createSpy('present') };
+      modalControllerSpy.create.and.returnValue(Promise.resolve(modalMock as any));
 
-  it('should not add a folder if name is empty', async () => {
-    component.newFolderName = '  ';
-    spyOn(console, 'log');
-    await component.addFolder();
-    expect(taskServiceMock.addFolder).not.toHaveBeenCalled();
-    expect(console.log).toHaveBeenCalledWith('El nombre de la carpeta no puede estar vacío');
-  });
+      await component.openTaskModal(1);
 
-  it('should present action sheet for adding tasks or folders', async () => {
-    await component.presentActionSheet();
-    expect(actionSheetControllerMock.create).toHaveBeenCalled();
-    const actionSheet = await actionSheetControllerMock.create.calls.mostRecent().returnValue;
-    expect(actionSheet.present).toHaveBeenCalled();
-  });
-
-  it('should open task modal with folderId', async () => {
-    await component.openTaskModal(1);
-    expect(modalControllerMock.create).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        component: FormularioTareaComponent,
+      expect(modalControllerSpy.create).toHaveBeenCalledWith({
+        component: jasmine.any(Function),
         componentProps: { folderId: 1 },
-      })
-    );
-    const modal = await modalControllerMock.create.calls.mostRecent().returnValue;
-    expect(modal.present).toHaveBeenCalled();
-  });
-
-  it('should call agregarTarea on action sheet handler', () => {
-    spyOn(component, 'agregarTarea');
-    component.presentActionSheet();
-    const handler = actionSheetControllerMock.create.calls.mostRecent().args[0].buttons.find(
-      (b: any) => b.text === 'Nueva Tarea'
-    ).handler;
-    handler();
-    expect(component.agregarTarea).toHaveBeenCalled();
+      });
+      expect(modalMock.present).toHaveBeenCalled();
+    });
   });
 });

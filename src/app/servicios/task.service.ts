@@ -28,14 +28,12 @@ export class TaskService {
     this.loadFolders();
   }
 
-  // Cargar carpetas desde el almacenamiento de manera asíncrona
   async loadFolders(): Promise<void> {
     const { value } = await Preferences.get({ key: 'folders' });
     const folders = value ? JSON.parse(value) : this.getDefaultFolders();
     this.foldersSubject.next(folders);
   }
 
-  // Obtener las carpetas por defecto si no hay datos en el almacenamiento
   private getDefaultFolders(): Folder[] {
     return [
       {
@@ -58,7 +56,6 @@ export class TaskService {
     ];
   }
 
-  // Guardar carpetas en el almacenamiento
   private async saveFolders() {
     await Preferences.set({
       key: 'folders',
@@ -66,20 +63,17 @@ export class TaskService {
     });
   }
 
-  // Agregar una nueva tarea a una carpeta
   async addTaskToFolder(folderId: number, task: Task) {
     const folders = this.foldersSubject.getValue();
     const folder = folders.find(f => f.id === folderId);
     if (folder) {
-      // Asignar un ID único a la tarea
       task.id = folder.tasks.length > 0 ? Math.max(...folder.tasks.map(t => t.id)) + 1 : 1;
       folder.tasks.push(task);
-      this.foldersSubject.next(folders); // Actualizar el observable
-      await this.saveFolders(); // Guardar en almacenamiento
+      this.foldersSubject.next(folders);
+      await this.saveFolders();
     }
   }
 
-  // Marcar una tarea como completada
   async toggleTaskCompletion(folderId: number, taskId: number) {
     const folders = this.foldersSubject.getValue();
     const folder = folders.find(f => f.id === folderId);
@@ -92,7 +86,6 @@ export class TaskService {
     }
   }
 
-  // Eliminar una tarea
   async deleteTask(folderId: number, taskId: number) {
     const folders = this.foldersSubject.getValue();
     const folder = folders.find(f => f.id === folderId);
@@ -103,7 +96,7 @@ export class TaskService {
     }
   }
 
-  // Agregar una nueva carpeta
+
   async addFolder(name: string) {
     const folders = this.foldersSubject.getValue();
     const folder: Folder = {

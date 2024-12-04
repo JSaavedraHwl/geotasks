@@ -70,13 +70,13 @@ export class TasksPage implements OnInit {
             this.openAddFolderModal();
           },
         },
-        {
-          text: 'Nueva Tarea',
-          icon: 'document-text-outline',
-          handler: () => {
-            this.agregarTarea();
-          },
-        },
+        // {
+        //   text: 'Nueva Tarea',
+        //   icon: 'document-text-outline',
+        //   handler: () => {
+        //     this.agregarTarea();
+        //   },
+        // },
         {
           text: 'Cancelar',
           icon: 'close',
