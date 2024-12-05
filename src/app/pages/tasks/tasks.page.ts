@@ -51,13 +51,14 @@ export class TasksPage implements OnInit {
     this.newFolderName = ''; // Limpiar el nombre después de cerrar
   }
   async addFolder() {
-    if (this.newFolderName.trim()) {
-      await this.taskService.addFolder(this.newFolderName);
-      this.closeAddFolderModal();
-    } else {
+    if (!this.newFolderName || !this.newFolderName.trim()) {
       console.log('El nombre de la carpeta no puede estar vacío');
+      return;
     }
+    await this.taskService.addFolder(this.newFolderName.trim());
+    this.closeAddFolderModal();
   }
+  
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Agregar',
@@ -69,13 +70,13 @@ export class TasksPage implements OnInit {
             this.openAddFolderModal();
           },
         },
-        {
-          text: 'Nueva Tarea',
-          icon: 'document-text-outline',
-          handler: () => {
-            this.agregarTarea();
-          },
-        },
+        // {
+        //   text: 'Nueva Tarea',
+        //   icon: 'document-text-outline',
+        //   handler: () => {
+        //     this.agregarTarea();
+        //   },
+        // },
         {
           text: 'Cancelar',
           icon: 'close',
@@ -94,4 +95,12 @@ export class TasksPage implements OnInit {
       modal.present();
     });
   }
+  async openTaskModal(folderId: number) {
+    const modal = await this.modalController.create({
+      component: FormularioTareaComponent,
+      componentProps: { folderId }, // Pasamos el folderId al modal
+    });
+    return await modal.present();
+  }
+  
 }

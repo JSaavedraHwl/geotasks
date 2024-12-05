@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 
 @Component({
   selector: 'app-configuracion',
@@ -9,6 +10,7 @@ import { NavController } from '@ionic/angular';
 export class ConfiguracionPage implements OnInit {
 
   seleccionarTema: string = 'light'; //el tema predeterminado del movil
+  autenticacionService = inject(AutenticacionService);
 
   constructor(private navCtrl: NavController) { }
 
@@ -22,8 +24,7 @@ export class ConfiguracionPage implements OnInit {
 
   cerrarSesion(){
     console.log("cerrando sesión...");
-
-    this.navCtrl.navigateRoot('/autenticacion')
+    this.autenticacionService.logout();
   }
   
   cambiarTema(tema: string){

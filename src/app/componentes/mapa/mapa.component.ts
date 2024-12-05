@@ -6,7 +6,7 @@ import { LocalicacionService } from 'src/app/servicios/localicacion.service';
   templateUrl: './mapa.component.html',
   styleUrls: ['./mapa.component.scss'],
 })
-export class MapaComponent  implements OnInit {
+export class MapaComponent {
   localizacionService = inject(LocalicacionService);
   
   @Output() locationSelected = new EventEmitter<{lat: number, lng: number}>();
@@ -47,8 +47,5 @@ export class MapaComponent  implements OnInit {
       this.locationSelected.emit({lat: latitude, lng: longitude});
     }
   }
-  
-
-  ngOnInit() {}
 
 }

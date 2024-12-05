@@ -5,9 +5,13 @@ import { AutenticacionService } from '../servicios/autenticacion.service';
 export const authenticatedGuard: CanActivateFn = (route, state) => {
   const authService = inject(AutenticacionService);
   const router = inject(Router);
-  const isAuthenticted =  authService.isAuthenticated;
-  if(!isAuthenticted) {
-    router.navigate(['autenticacion']);
+
+  const token = authService.getToken();
+  const isGuest = (authService.isAuthenticated && authService.isGuest)
+  const isAuthenticated = (authService.isAuthenticated && token !== null);
+
+  if (!isAuthenticated && !isGuest) {
+    router.navigate(['/autenticacion']);
     return false;
   }
   return true;
