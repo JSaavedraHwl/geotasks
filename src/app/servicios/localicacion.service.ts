@@ -9,13 +9,6 @@ export class LocalicacionService {
   constructor() { }
 
 
-
- printCurrentPosition = async () => {
-  const coordinates = await Geolocation.getCurrentPosition();
-
-  console.log('Current position:', coordinates);
-};
-
 getCurrentLocation = async () => {
   const coordinates = await Geolocation.getCurrentPosition();
   const {coords} = coordinates;

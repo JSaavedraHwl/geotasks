@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 
 @Component({
   selector: 'app-configuracion',
@@ -8,12 +9,13 @@ import { NavController } from '@ionic/angular';
 })
 export class ConfiguracionPage implements OnInit {
 
+  autenticacionService = inject(AutenticacionService);
+
   constructor(private navCtrl: NavController) { }
 
   cerrarSesion(){
     console.log("cerrando sesión...");
-
-    this.navCtrl.navigateRoot('/autenticacion')
+    this.autenticacionService.logout();
   }
   ngOnInit() {
   }

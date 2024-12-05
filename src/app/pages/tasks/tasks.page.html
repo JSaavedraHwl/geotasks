@@ -14,6 +14,11 @@
       <ion-item slot="header" color="light">
         <ion-label>{{ folder.name }}</ion-label>
         <ion-icon name="folder-outline" slot="start"></ion-icon>
+        <ion-icon
+            name="add-outline"
+            slot="end"
+            (click)="openTaskModal(folder.id)"
+          ></ion-icon>
       </ion-item>
       <ion-list slot="content">
         <ion-item *ngFor="let task of folder.tasks">
