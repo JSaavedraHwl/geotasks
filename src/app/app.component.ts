@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+
+  constructor() {
+    this.setInitialTheme();
+  }
+
+  setInitialTheme() {
+    const savedTheme = localStorage.getItem('tema') || 'light'; 
+    document.body.setAttribute('theme', savedTheme); 
+  }
 }

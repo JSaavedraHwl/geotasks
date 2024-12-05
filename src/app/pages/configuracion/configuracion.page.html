@@ -7,15 +7,26 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="12">Configuración</ion-title>
+      <ion-title size="small">Configuración</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div class="center-button">
-    <ion-avatar>
+
+  <div class="center-content">
+    <ion-avatar class="avatar">
       <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
     </ion-avatar>
-    <ion-button (click)="cerrarSesion()" color="primary">
+
+    <ion-item lines="none" class="theme-selector">
+      <ion-label>Selecciona el Tema</ion-label>
+      <ion-select [(ngModel)]="seleccionarTema" (ionChange)="cambiarTema($event.detail.value)">
+        <ion-select-option value="light">Claro</ion-select-option>
+        <ion-select-option value="dark">Oscuro</ion-select-option>yo
+        <ion-select-option value="custom">Personalizado</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="full" (click)="cerrarSesion()" color="primary" class="logout-button">
       <ion-icon slot="start" name="log-out-outline"></ion-icon>
       Cerrar Sesión
     </ion-button>

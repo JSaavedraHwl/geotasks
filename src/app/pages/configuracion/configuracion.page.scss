@@ -1,12 +1,22 @@
-.center-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-  }
-  
-.title-centered {
-    text-align: center;
-    font-size: 18px; /* Ajusta el tamaño según tus necesidades */
-  }
-  
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Alinea los elementos hacia la parte superior */
+  height: 70vh; /* Ajusta la altura total a un valor menor que 100vh */
+  padding-top: 20px; /* Añade espacio en la parte superior */
+  gap: 20px; /* Espacio entre los elementos */
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+}
+
+.theme-selector {
+  width: 80%; /* Ajusta el ancho del selector de tema */
+}
+
+.logout-button {
+  width: 80%; /* Ajusta el ancho del botón */
+}

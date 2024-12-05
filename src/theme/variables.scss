@@ -1,2 +1,27 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+/* Tema Claro (Predeterminado) */
+:root {
+    --ion-color-primary: #3880ff;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-background-color: #ffffff;
+    --ion-text-color: #000000;
+    /* Otros colores claros */
+  }
+  
+  /* Tema Oscuro */
+  :root[theme="dark"] {
+    --ion-color-primary: #222428;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-background-color: #000000;
+    --ion-text-color: #ffffff;
+    /* Otros colores oscuros */
+  }
+  
+  /* Tema Personalizado */
+  :root[theme="custom"] {
+    --ion-color-primary: #ff6347; /* Rojo tomate */
+    --ion-color-primary-contrast: #ffffff;
+    --ion-background-color: #f0e68c; /* Fondo amarillo claro */
+    --ion-text-color: #2e2e2e; /* Texto gris oscuro */
+    /* Otros colores personalizados */
+  }
+  
