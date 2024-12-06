@@ -11,7 +11,7 @@
 <ion-content>
   <ion-accordion-group>
     <ion-accordion *ngFor="let folder of folders" [value]="folder.id">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header">
         <ion-label>{{ folder.name }}</ion-label>
         <ion-icon name="folder-outline" slot="start"></ion-icon>
         <ion-icon

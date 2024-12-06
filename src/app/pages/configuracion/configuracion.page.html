@@ -16,15 +16,36 @@
     <ion-avatar class="avatar">
       <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
     </ion-avatar>
-
-    <ion-item lines="none" class="theme-selector">
-      <ion-label>Selecciona el Tema</ion-label>
+    <ion-item>
+      <ion-label>Escoger tema de color:</ion-label>
       <ion-select [(ngModel)]="seleccionarTema" (ionChange)="cambiarTema($event.detail.value)">
-        <ion-select-option value="light">Claro</ion-select-option>
-        <ion-select-option value="dark">Oscuro</ion-select-option>yo
-        <ion-select-option value="custom">Personalizado</ion-select-option>
+        <ion-select-option value="light" data-color="light">
+          <span>Claro</span>
+        </ion-select-option>
+        <ion-select-option value="dark" data-color="dark">
+          <span>Oscuro</span>
+        </ion-select-option>
+        <ion-select-option value="pink" data-color="pink">
+          <span>Rosado</span>
+        </ion-select-option>
+        <ion-select-option value="lila" data-color="lila">
+          <span>Lila</span>
+        </ion-select-option>
+        <ion-select-option value="naranjo" data-color="naranjo">
+          <span>Naranjo</span>
+        </ion-select-option>
+        <ion-select-option value="verde" data-color="verde">
+          <span>Verde</span>
+        </ion-select-option>
       </ion-select>
     </ion-item>
+
+
+    <!-- <ion-item>
+      <ion-label>Modo Oscuro</ion-label>
+      <ion-toggle (ionChange)="onToggleDarkMode($event)"></ion-toggle>
+    </ion-item> -->
+
 
     <ion-button expand="full" (click)="cerrarSesion()" color="primary" class="logout-button">
       <ion-icon slot="start" name="log-out-outline"></ion-icon>

@@ -1,27 +1,72 @@
-/* Tema Claro (Predeterminado) */
-:root {
-    --ion-color-primary: #3880ff;
-    --ion-color-primary-contrast: #ffffff;
-    --ion-background-color: #ffffff;
-    --ion-text-color: #000000;
-    /* Otros colores claros */
+// :root {
+//   --ion-color-primary: #3880ff;
+//   --ion-color-secondary: #3dc2ff;
+//   --ion-background-color: #ffffff;
+// }
+
+// .dark-theme {
+//   --ion-color-primary: #222428;
+//   --ion-color-secondary: #92949c;
+//   --ion-background-color: #1e1e1e;
+// }
+
+
+/* Estilos para el tema light */
+body[theme="light"] {
+  --ion-color-primary: #3880ff;
+  --ion-color-secondary: #3dc2ff;
+  // --ion-color-terciary: #ff0000;
+  --ion-background-color: #ffffff;
+  --ion-text-color: #000000;
+}
+
+/* Estilos para el tema dark */
+body[theme="dark"] {
+  --ion-color-primary: #5372ff;
+  --ion-color-secondary: #ffffff;
+  // --ion-color-terciary: #ff0000;
+  --ion-background-color: #1e1e1e;
+  --ion-text-color: #ffffff;
+  //Algunos label siguen oscuros para este tema
+  alert-radio-label {
+    color: #ffffff;
   }
-  
-  /* Tema Oscuro */
-  :root[theme="dark"] {
-    --ion-color-primary: #222428;
-    --ion-color-primary-contrast: #ffffff;
-    --ion-background-color: #000000;
-    --ion-text-color: #ffffff;
-    /* Otros colores oscuros */
-  }
-  
-  /* Tema Personalizado */
-  :root[theme="custom"] {
-    --ion-color-primary: #ff6347; /* Rojo tomate */
-    --ion-color-primary-contrast: #ffffff;
-    --ion-background-color: #f0e68c; /* Fondo amarillo claro */
-    --ion-text-color: #2e2e2e; /* Texto gris oscuro */
-    /* Otros colores personalizados */
-  }
-  
+  --ion-select-option-text-color: #fff; /* Blanco */
+}
+
+/* Estilos para el tema pink */
+body[theme="pink"] {
+  --ion-color-primary: #ff4081;
+  --ion-color-secondary: #ff80ab;
+  // --ion-color-terciary: #ff0000;
+  --ion-background-color: #ffe4e1;
+  --ion-text-color: #880e4f;
+}
+
+
+//Agrega color lila
+body[theme="lila"] {
+  --ion-color-primary: #9c27b0;
+  --ion-color-secondary: #e1bee7;
+  // --ion-color-terciary: #ff0000;
+  --ion-background-color: #f3e5f5;
+  --ion-text-color: #4a148c;
+}
+
+//Agrega color naranjo
+body[theme="naranjo"] {
+  --ion-color-primary: #ff9800;
+  --ion-color-secondary: #ffcc80;
+  // --ion-color-terciary: #ff0000;
+  --ion-background-color: #fff3e0;
+  --ion-text-color: #e65100;
+}
+
+//Agrega color verde
+body[theme="verde"] {
+  --ion-color-primary: #4caf50;
+  --ion-color-secondary: #81c784;
+  // --ion-color-terciary: #ff0000;
+  --ion-background-color: #e8f5e9;
+  --ion-text-color: #1b5e20;
+}
